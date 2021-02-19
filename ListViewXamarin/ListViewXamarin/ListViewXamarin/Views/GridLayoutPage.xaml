@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ListViewGridLayout.GridLayoutPage"
+             xmlns:syncfusion="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
+             xmlns:local="clr-namespace:ListViewGridLayout">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:SelectionBoolToImageConverter x:Key="BoolToImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="headerGrid" BackgroundColor="#FFEEEEF2" HeightRequest="45">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Label LineBreakMode="NoWrap"
+             Text="{Binding TitleInfo}" FontAttributes="Bold"
+             FontSize="16" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Center"/>
+            <Label LineBreakMode="NoWrap" Grid.Column="0"
+             Margin="10,0,0,0" Text="{Binding HeaderInfo}"
+             FontSize="16" TextColor="Black" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Image Source="{Binding Delete}"
+           x:Name="deleteImage"
+           Grid.Column="1"
+           HeightRequest="30"
+           WidthRequest="30"
+           Margin="5,5,10,5"
+           IsVisible="{Binding IsVisible}"
+           HorizontalOptions="End"
+           VerticalOptions="Center"/>
+        </Grid>
+        <syncfusion:SfListView x:Name="listView"
+                     SelectionMode="Multiple"
+                     Grid.Row="1"
+                     ItemSpacing="3">
+
+            <syncfusion:SfListView.ItemSize>
+                <OnPlatform x:TypeArguments="x:Double">
+                    <OnPlatform.Android>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="150" Tablet="150" />
+                    </OnPlatform.Android>
+                    <OnPlatform.iOS>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="150" Tablet="170" />
+                    </OnPlatform.iOS>
+                </OnPlatform>
+            </syncfusion:SfListView.ItemSize>
+
+            <syncfusion:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid RowSpacing="0" ColumnSpacing="0">
+                        <Image Source="{Binding Image}"
+                   Aspect="AspectFill"
+                          MinimumHeightRequest="40" MinimumWidthRequest="40" />
+                        <Grid ColumnSpacing="0" RowSpacing="0" Opacity="1" HorizontalOptions="End" Padding="5" VerticalOptions="Start">
+                            <Image
+                   x:Name="selectionImage"
+                   HeightRequest="25"
+                   WidthRequest="25"
+                   VerticalOptions="Start"
+                   HorizontalOptions="End"
+                   IsVisible="{Binding Path=IsSelected}"
+                             Source="{Binding Path=IsSelected, Converter={StaticResource BoolToImageConverter}}"/>
+                        </Grid>
+                        <Grid VerticalOptions="End" ColumnSpacing="0" Opacity="0.75" BackgroundColor="#CDCDCD">
+                            <Grid.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <OnPlatform.WinPhone>
+                                        <OnIdiom x:TypeArguments="x:Double" Phone="30" Tablet="40" />
+                                    </OnPlatform.WinPhone>
+                                    <OnPlatform.Android>
+                                        <OnIdiom x:TypeArguments="x:Double" Phone="30" Tablet="40" />
+                                    </OnPlatform.Android>
+                                    <OnPlatform.iOS>
+                                        <OnIdiom x:TypeArguments="x:Double" Phone="30" Tablet="40" />
+                                    </OnPlatform.iOS>
+                                </OnPlatform>
+                            </Grid.HeightRequest>
+                            <Label Text="{Binding ImageTitle}" TextColor="Black"
+                     VerticalTextAlignment="Center"
+                     Margin="20,0,0,0"
+                     HorizontalTextAlignment="Start">
+                                <Label.FontSize>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <OnPlatform.WinPhone>
+                                            <OnIdiom x:TypeArguments="x:Double" Phone="12" Tablet="18" />
+                                        </OnPlatform.WinPhone>
+                                        <OnPlatform.Android>
+                                            <OnIdiom x:TypeArguments="x:Double" Phone="10" Tablet="15" />
+                                        </OnPlatform.Android>
+                                        <OnPlatform.iOS>
+                                            <OnIdiom x:TypeArguments="x:Double" Phone="10" Tablet="15" />
+                                        </OnPlatform.iOS>
+                                    </OnPlatform>
+                                </Label.FontSize>
+                            </Label>
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </syncfusion:SfListView.ItemTemplate>
+
+            <syncfusion:SfListView.GroupHeaderTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.View>
+                            <Grid BackgroundColor="#808080">
+                                <Label Text="{Binding Key}"
+                       FontSize="15"
+                       TextColor="White"
+                       HorizontalTextAlignment="Start"
+                       VerticalTextAlignment="Center"
+                       Margin="20,0,0,0" />
+                            </Grid>
+                        </ViewCell.View>
+                    </ViewCell>
+                </DataTemplate>
+            </syncfusion:SfListView.GroupHeaderTemplate>
+        </syncfusion:SfListView>
+    </Grid>
+</ContentPage>
